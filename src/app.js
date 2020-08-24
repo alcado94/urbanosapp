@@ -8,7 +8,7 @@ var compression = require('compression');
 var helmet = require('helmet');
 const { JSDOM } = jsdom;
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 const URLTIEMPO = 'http://consultasqrou.avanzagrupo.com:8088/default.aspx?parada=';
 const URLPARADAS = 'http://www.urbanosdeourense.es/php/index.php?pag=lineas/smbus';
