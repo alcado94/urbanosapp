@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="app" class="main">
+        <!-- <ul v-if="stopSaved">
+            <li v-for="stop in stopSaved.Paradas">
+               {{ stop.NombreParada }}
+            </li>
+        </ul> -->
+        <h4>
+            Busca tu parada
+        </h4>
+        <div style="position: relative; width: 100%;">
+
+            <input type="text" v-model="searchQuery" class="search-input" placeholder="Inserta nombre de la parada">
+            
+            <ul v-if="stopsResult && !stop && !loading" class="list">
+                <li v-for="stop in stopsResult" @click="selectStop(stop.NumParada)" class="list-elem">
+                    {{ stop.NombreParada }} - {{ stop.Sentido}}
+                </li>
+            </ul>
+        </div>
+        
+        <div v-if="loading" class="loader">Loading...</div>
+        <ul v-if="stop" class="list-routes">
+            <li>
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Linea</span>
+                    <span>Tiempo</span>
+                </div>
+            </li>
+            <li v-for="time in stop.Lineas">
+                <div style="display: flex; justify-content: space-between;">
+                    <span>{{time.NumLinea}} - {{time.NombreLinea}}</span>
+                    <span>{{time.Tiempo}} min</span>
+                </div>
+            </li>
+        </ul>
+        <!--
+
+            <select name="" id="" @change="selectStop()" v-model="stopId" class="buscador">
+                <option v-for="item in stopsList" :key="item.NumParada"  v-bind:value="item.NumParada">{{item.NombreParada}} - {{item.Sentido}}</option>
+            </select>
+        -->
+            
+            <!-- <button v-if="stopTime" @click="saveStop()">Guardar parada</button> -->
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/main.js"></script>
+    
+</body>
+</html>
