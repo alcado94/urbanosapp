@@ -5,17 +5,16 @@ const cors = require('cors')
 const jsdom = require("jsdom");
 const path = require('path')
 var compression = require('compression');
-var helmet = require('helmet');
+
 const { JSDOM } = jsdom;
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 const URLTIEMPO = 'http://consultasqrou.avanzagrupo.com:8088/default.aspx?parada=';
 const URLPARADAS = 'http://www.urbanosdeourense.es/php/index.php?pag=lineas/smbus';
 
 app.use(cors());
 app.use(compression());
-app.use(helmet());
 app.use(express.static(__dirname + '/public'));
 
 app.get('/api/stops/:id', (req, res) => {
