@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/app.js",
     "start:dev": "node src/app.js",
     "dev": "./node_modules/.bin/babel src --out-dir dist",
     "test": "echo \"Error: no test specified\" && exit 1"
