@@ -22,7 +22,7 @@ var app = new Vue({
     mounted () {
         this.stopSaved = JSON.parse(localStorage.getItem("Paradas"));
         axios
-            .get('http://192.168.1.34:3000/api/stops')
+            .get('https://localhost:3000/api/stops')
             .then(response => this.stopsList = response.data )
     },
     methods: {
@@ -30,7 +30,7 @@ var app = new Vue({
             this.stop = undefined
             this.loading = true;
             axios
-                .get('http://192.168.1.34:3000/api/stops/'+id)
+                .get('https://localhost:3000/api/stops/'+id)
                 .then(response => {
                     this.loading = false;
                     this.stop = response.data 
