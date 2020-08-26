@@ -47,19 +47,29 @@ app.get('/api/stops/:id', (req, res) => {
 			const dom = new JSDOM(body);
 			const table = dom.window.document.getElementById('GridView1');
 			
+			let pages = 1;
+			if (table.rows[table.rows.length-1].querySelector("table")) {
+				pages = table.rows[table.rows.length-1].querySelector("table").rows[0].cells.length
+			}
+
+			let readLastRow = true;
+			if (pages > 1){
+				readLastRow = false;
+			}
+
 			if (!table && table.rows.length < 3)
 				return res.status(404).send('Sorry, cant find that');
 
 			const toret = {
 				"NombreParada": dom.window.document.getElementById('lblNombre').textContent,
 				"Lineas": [],
-				"NumPag": table.rows[table.rows.length-1].querySelector("table").rows[0].cells.length
+				"NumPag": pages
 			};
 
 			// Se recorre las filas que necesitamos y pasrseamos los datos a un json
 			for (var i = 0, row; row = table.rows[i]; i++) {
-				// Se evitan la primera y ultima porque no dan informacion
-				if (i !== 0 && i !==table.rows.length-1) {
+				
+				if (i !== 0 && (readLastRow || i !== table.rows.length-1)) {
 					const result = {
 						"NumLinea": parseInt(row.cells[0].textContent),
 						"NombreLinea": row.cells[1].textContent,

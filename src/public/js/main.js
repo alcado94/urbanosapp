@@ -15,7 +15,8 @@ var app = new Vue({
             if (this.searchQuery !== '') {
                 this.stop = undefined
                 return this.stopsList.filter((stop) => {
-                    return stop.NombreParada.toLowerCase().match(this.searchQuery.toLowerCase())
+                    return stop.NumParada == this.searchQuery || 
+                        stop.NombreParada.toLowerCase().match(this.searchQuery.toLowerCase())
                 });
             } 
         }
@@ -36,8 +37,7 @@ var app = new Vue({
                 .then(response => {
                     this.loading = false;
                     this.stop = response.data 
-                })
-            //this.stopTime = [{"NumLinea":20, "NombreLinea":"test", "Tiempo": 30},{"NumLinea":20, "NombreLinea":"test", "Tiempo": 10}]
+                });
         },
         saveStop() {
             // COMPROBAR QUE NO SE INSERTE VALORES DUPLICADOS
