@@ -5,6 +5,7 @@ var app = new Vue({
         stop: undefined,
         searchQuery: '',
         stopId: '',
+        stopName: '',
         stopTime: undefined,
         stopSaved: undefined,
         loading: false
@@ -14,7 +15,7 @@ var app = new Vue({
             if (this.searchQuery !== '') {
                 this.stop = undefined
                 return this.stopsList.filter((stop) => {
-                    return stop.NombreParada.match(this.searchQuery)
+                    return stop.NombreParada.toLowerCase().match(this.searchQuery.toLowerCase())
                 });
             } 
         }
@@ -26,9 +27,10 @@ var app = new Vue({
             .then(response => this.stopsList = response.data )
     },
     methods: {
-        selectStop(id) {
+        selectStop(id, name, sentido) {
             this.stop = undefined
             this.loading = true;
+            this.stopName = name + ' - ' + sentido;
             axios
                 .get('https://urbanosou.herokuapp.com/api/stops/'+id)
                 .then(response => {

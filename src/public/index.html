@@ -21,18 +21,21 @@
             <input type="text" v-model="searchQuery" class="search-input" placeholder="Inserta nombre de la parada">
             
             <ul v-if="stopsResult && !stop && !loading" class="list">
-                <li v-for="stop in stopsResult" @click="selectStop(stop.NumParada)" class="list-elem">
+                <li v-for="stop in stopsResult" @click="selectStop(stop.NumParada, stop.NombreParada, stop.Sentido)" class="list-elem">
                     {{ stop.NombreParada }} - {{ stop.Sentido}}
                 </li>
             </ul>
         </div>
         
         <div v-if="loading" class="loader">Loading...</div>
+        <h3 v-if="stop">
+            {{ stopName }}
+        </h3>
         <ul v-if="stop" class="list-routes">
             <li>
                 <div style="display: flex; justify-content: space-between;">
                     <span>Linea</span>
-                    <span>Tiempo</span>
+                    <span>Tiempo Restante para llegada</span>
                 </div>
             </li>
             <li v-for="time in stop.Lineas">
