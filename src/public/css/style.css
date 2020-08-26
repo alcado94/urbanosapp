@@ -52,6 +52,10 @@ ul {
   background-color: #ebe8fd;
 }
 
+.active-item {
+  background-color: #ebe8fd;
+}
+
 .list-routes {
   box-sizing: border-box;
     padding: 0px 10px;

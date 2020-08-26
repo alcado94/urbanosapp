@@ -7,13 +7,14 @@ var app = new Vue({
         stopId: '',
         stopName: '',
         stopTime: undefined,
-        stopSaved: undefined,
-        loading: false
+        loading: false,
+        currentItem: 0,
     },
     computed: {
         stopsResult: function(){
             if (this.searchQuery !== '') {
                 this.stop = undefined
+                this.currentItem = 0;
                 return this.stopsList.filter((stop) => {
                     return stop.NumParada == this.searchQuery || 
                         stop.NombreParada.toLowerCase().match(this.searchQuery.toLowerCase())
@@ -39,12 +40,14 @@ var app = new Vue({
                     this.stop = response.data 
                 });
         },
-        saveStop() {
-            // COMPROBAR QUE NO SE INSERTE VALORES DUPLICADOS
-            if (!this.stopSaved) this.stopSaved = {"Paradas":[]}
-            
-            this.stopSaved.Paradas.push({"NumParada":this.stopId,"NombreParada":this.stop.NombreParada})
-            localStorage.setItem("Paradas", JSON.stringify(this.stopSaved))
+        nextItem () {
+            if (event.keyCode === 38 && this.currentItem >= 0) {
+                this.currentItem--;
+            } else if (event.keyCode === 40 && this.currentItem < this.stopsResult.length) {
+                this.currentItem++;
+            } else if (event.keyCode === 13) {
+                this.selectStop(this.stopsResult[this.currentItem].NumParada,this.stopsResult[this.currentItem].NombreParada,this.stopsResult[this.currentItem].Sentido)
+            }
         }
     }
 })
