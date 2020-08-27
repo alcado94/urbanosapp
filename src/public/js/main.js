@@ -18,7 +18,7 @@ var app = new Vue({
                 return this.stopsList.filter((stop) => {
                     return stop.NumParada == this.searchQuery || 
                         stop.NombreParada.toLowerCase().match(this.searchQuery.toLowerCase())
-                });
+                }).slice(0, 7);
             } 
         }
     },
@@ -33,6 +33,7 @@ var app = new Vue({
             this.stop = undefined
             this.loading = true;
             this.stopName = name + ' - ' + sentido;
+            this.searchQuery = this.stopName;
             axios
                 .get('https://urbanosou.herokuapp.com/api/stops/'+id)
                 .then(response => {
@@ -41,9 +42,9 @@ var app = new Vue({
                 });
         },
         nextItem () {
-            if (event.keyCode === 38 && this.currentItem >= 0) {
+            if (event.keyCode === 38 && this.currentItem > 0) {
                 this.currentItem--;
-            } else if (event.keyCode === 40 && this.currentItem < this.stopsResult.length) {
+            } else if ((event.keyCode === 40 || event.keyCode === 9) && this.currentItem < this.stopsResult.length-1) {
                 this.currentItem++;
             } else if (event.keyCode === 13) {
                 this.selectStop(this.stopsResult[this.currentItem].NumParada,this.stopsResult[this.currentItem].NombreParada,this.stopsResult[this.currentItem].Sentido)

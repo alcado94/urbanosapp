@@ -47,6 +47,9 @@ app.get('/api/stops/:id', (req, res) => {
 			const dom = new JSDOM(body);
 			const table = dom.window.document.getElementById('GridView1');
 			
+			if (!table && table.rows.length < 3)
+				return res.status(404).send('Sorry, cant find that');
+				
 			let pages = 1;
 			if (table.rows[table.rows.length-1].querySelector("table")) {
 				pages = table.rows[table.rows.length-1].querySelector("table").rows[0].cells.length
@@ -57,8 +60,6 @@ app.get('/api/stops/:id', (req, res) => {
 				readLastRow = false;
 			}
 
-			if (!table && table.rows.length < 3)
-				return res.status(404).send('Sorry, cant find that');
 
 			const toret = {
 				"NombreParada": dom.window.document.getElementById('lblNombre').textContent,

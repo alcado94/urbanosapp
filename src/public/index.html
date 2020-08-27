@@ -4,30 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urbanos de Ourense</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div id="app" class="main">
-        <h4>
-            Busca tu parada
-        </h4>
+        <h3 class="title">
+            Busca tu parada de autobús
+        </h3>
         <div style="position: relative; width: 100%;"  @keyup='nextItem'>
-
             <input type="text" v-bind:value="searchQuery" v-on:input="searchQuery= $event.target.value" class="search-input" 
                 placeholder="Inserta nombre o número de la parada">
-            
             <ul v-if="stopsResult && !stop && !loading" class="list">
                 <li :class='{"active-item": currentItem == index}' v-for="(stop, index) in stopsResult" 
                     @click="selectStop(stop.NumParada, stop.NombreParada, stop.Sentido)" class="list-elem">
-                    {{ stop.NombreParada }} - {{ stop.Sentido}}
+                    {{ stop.NombreParada }} - {{ stop.Sentido }} <span class="list-elem-number-stop">({{ stop.NumParada }})</span>
                 </li>
             </ul>
         </div>
-        
         <div v-if="loading" class="loader">Loading...</div>
-        <h3 v-if="stop">
-            {{ stopName }}
-        </h3>
         <ul v-if="stop" class="list-routes">
             <li>
                 <div style="display: flex; justify-content: space-between;">
